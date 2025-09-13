@@ -29,4 +29,6 @@
     width: 28px;
     background-color: blueviolet;
     border: black 1px solid;
+    background-position: center;
+    background-size: cover;
 }

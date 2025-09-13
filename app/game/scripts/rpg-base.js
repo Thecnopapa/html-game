@@ -29,26 +29,22 @@ async function renderRPGMap(mapName, mapContainer=undefined){
 
     let templateTile = mapContainer.getElementsByClassName("template-tile")[0];
     let newTiles = [];
+    let newTextures = mapData["tileTextures"];
     console.log(mapData);
-    let mapTiles = mapData["mapTiles"];
-    for (let [col, row] of Object.entries(mapTiles)){
+    for (let [col, row] of Object.entries(newTextures)){
         console.log(col,row);
-        row.forEach(tile => {
+        row.forEach(tilePath => {
             let newTile = templateTile.cloneNode(true);
             newTile.className = "rpg-tile";
-            newTile.innerHTML = tile;
+            newTile.style.backgroundImage = "url(" + tilePath +")";
+            mapContainer.appendChild(newTile);
             newTiles.push(newTile);
+
         });
     }
     console.log(newTiles);
-    newTiles.forEach(tile => mapContainer.appendChild(tile));
-
-
-
-
+    console.log(await Promise.all(newTextures));
 }
-
-
 
 
 
