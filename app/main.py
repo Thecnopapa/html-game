@@ -51,12 +51,17 @@ def return_tile(path):
 
     modifiers = request.args.get("modifiers")
     if modifiers != "":
-        modifiers = modifiers.split(";")
+        if ";" in modifiers:
+            modifiers = modifiers.split(";")
+        else:
+            modifiers = [modifiers]
 
     print(request.args.get("modifiers"))
+    if path == "no-tile" or path == "error-tile":
+        print("missing-tile")
     tile_path = os.path.join("app/game/rpg-assets/tiles/", path)
     print("TILE PATH:", tile_path)
-    img = Image.open(tile_path).convert("RGBA")
+    img = Image.open(tile_path).convert("RGBA").resize((32, 32))
     print("MODIFIERS", modifiers)
     if len(modifiers) > 0:
         for modifier in modifiers:
@@ -64,7 +69,7 @@ def return_tile(path):
             modifier_name = "-".join(modifier_components[2:])
             modifier_tile = [f for f in os.listdir("app/game/rpg-assets/tiles/{}/{}/".format(modifier_components[0], modifier_components[1])) if modifier_name in f][0]
             modifier_path = "app/game/rpg-assets/tiles/{}/{}/{}".format(modifier_components[0], modifier_components[1], modifier_tile)
-            modifier_img = Image.open(modifier_path).convert("RGBA")
+            modifier_img = Image.open(modifier_path).convert("RGBA").resize((32, 32))
             img.paste(modifier_img, (0, 0), modifier_img)
     b = io.BytesIO()
     img.save(b, "png")
@@ -80,19 +85,15 @@ def get_tile_url(tile):
             tile = tile.split("$")[0]
         components = tile.split("-")
         tile_name = "-".join(components[2:])
-        #print(tile)
         available_tiles = os.listdir("app/game/rpg-assets/tiles/{}/{}/".format(components[0], components[1]))
-        #print(available_tiles, tile_name)
         target_tiles = [t for t in available_tiles if tile_name in t]
-        #print(target_tiles)
         if len(target_tiles) == 0:
-            return "No tile"
+            return "/rpg/tile/no-tile"
         r_tile = random.choice(target_tiles)
         tile_url = "/rpg/tile/{}/{}/{}?modifiers={}".format(components[0], components[1], r_tile, modifiers)
-        #print(tile_url)
         return tile_url
     except:
-        return "Error"
+        return "/rpg/tile/error-tile"
 
 
 

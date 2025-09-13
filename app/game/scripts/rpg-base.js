@@ -22,7 +22,7 @@ async function renderRPGMap(mapName, mapContainer=undefined){
 
 
     let templateTile = mapContainer.getElementsByClassName("template-tile")[0];
-    let tileSize = 34;
+    let tileSize = 32;
     console.log(tileSize);
 
 
