@@ -25,8 +25,8 @@
 }
 
 .rpg-tile{
-    height: 28px;
-    width: 28px;
+    height: 32px;
+    width: 32px;
     background-color: blueviolet;
     border: black 1px solid;
     background-position: center;

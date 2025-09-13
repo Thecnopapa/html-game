@@ -4,6 +4,8 @@ import pandas as pd
 import os
 import json
 import random
+from PIL import Image
+import io
 app = Flask(__name__, template_folder='game/templates', static_folder='game')
 
 
@@ -46,25 +48,48 @@ def get_rpg_map():
 @app.route("/rpg/tile/<path:path>", methods=["GET", "POST"])
 def return_tile(path):
     print(path)
-    r = send_file("game/rpg-assets/tiles/"+ path)
-    print(r)
-    return r
+
+    modifiers = request.args.get("modifiers")
+    if modifiers != "":
+        modifiers = modifiers.split(";")
+
+    print(request.args.get("modifiers"))
+    tile_path = os.path.join("app/game/rpg-assets/tiles/", path)
+    print("TILE PATH:", tile_path)
+    img = Image.open(tile_path).convert("RGBA")
+    print("MODIFIERS", modifiers)
+    if len(modifiers) > 0:
+        for modifier in modifiers:
+            modifier_components = modifier.split("-")
+            modifier_name = "-".join(modifier_components[2:])
+            modifier_tile = [f for f in os.listdir("app/game/rpg-assets/tiles/{}/{}/".format(modifier_components[0], modifier_components[1])) if modifier_name in f][0]
+            modifier_path = "app/game/rpg-assets/tiles/{}/{}/{}".format(modifier_components[0], modifier_components[1], modifier_tile)
+            modifier_img = Image.open(modifier_path).convert("RGBA")
+            img.paste(modifier_img, (0, 0), modifier_img)
+    b = io.BytesIO()
+    img.save(b, "png")
+    b.seek(0)
+    return send_file(b, mimetype="image/png")
 
 
 def get_tile_url(tile):
     try:
+        modifiers = ""
+        if "$" in tile:
+            modifiers = tile.split("$")[1]
+            tile = tile.split("$")[0]
         components = tile.split("-")
         tile_name = "-".join(components[2:])
-        print(tile)
+        #print(tile)
         available_tiles = os.listdir("app/game/rpg-assets/tiles/{}/{}/".format(components[0], components[1]))
-        print(available_tiles, tile_name)
+        #print(available_tiles, tile_name)
         target_tiles = [t for t in available_tiles if tile_name in t]
-        print(target_tiles)
+        #print(target_tiles)
         if len(target_tiles) == 0:
             return "No tile"
         r_tile = random.choice(target_tiles)
-        tile_url = "/rpg/tile/{}/{}/{}".format(components[0], components[1], r_tile)
-        print(tile_url)
+        tile_url = "/rpg/tile/{}/{}/{}?modifiers={}".format(components[0], components[1], r_tile, modifiers)
+        #print(tile_url)
         return tile_url
     except:
         return "Error"

@@ -19,15 +19,17 @@ async function renderRPGMap(mapName, mapContainer=undefined){
         mapContainer = document.getElementsByClassName("rpg-map")[0];
     }
     [...mapContainer.children].forEach(c => {if (!c.classList.contains("template")){c.remove();}});
-    let tileSize = 30;
+
+
+    let templateTile = mapContainer.getElementsByClassName("template-tile")[0];
+    let tileSize = 34;
+    console.log(tileSize);
+
 
     mapContainer.style.height = String(Number(mapData["size"][0]) * tileSize) + "px";
     mapContainer.style.width = String(Number(mapData["size"][1]) * tileSize) + "px";
 
 
-
-
-    let templateTile = mapContainer.getElementsByClassName("template-tile")[0];
     let newTiles = [];
     let newTextures = mapData["tileTextures"];
     console.log(mapData);
