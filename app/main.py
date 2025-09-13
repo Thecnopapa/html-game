@@ -34,7 +34,7 @@ def get_rpg_map():
     print(map_df)
     map_data = {
         "mapName": map_name,
-        "map": map_df.to_dict(orient="list"),
+        "mapTiles": map_df.to_dict(orient="list"),
         "size": map_df.shape
     }
     return json.dumps(map_data)
