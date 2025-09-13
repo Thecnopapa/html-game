@@ -3,7 +3,7 @@
 
 
 {% block imports %}
-
+<link href='/style/main-menu.css' rel='stylesheet'>
 {% endblock %}
 
 
@@ -11,17 +11,12 @@
 
 
 <div id="main-menu">
-    <div>
         <div id="main-menu-buttons">
-            <div>New Game</div>
-            <div>Load Game</div>
-            <div>RPG Test</div>
-            <div>Metroidvania Test</div>
+            <div class="main-menu-button" onclick="fadeTo('/new-game')">New Game</div>
+            <div class="main-menu-button" onclick="fadeTo('/load-game')">Load Game</div>
+            <div class="main-menu-button" onclick="fadeTo('/rpg-test')">RPG Test</div>
+            <div class="main-menu-button" onclick="fadeTo('/metro-test')">Metroidvania Test</div>
         </div>
-    </div>
 </div>
-
-
-
 
 {% endblock %}
