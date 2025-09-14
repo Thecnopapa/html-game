@@ -1,0 +1,1 @@
+{"Events":{"map":{"test-001":{"trigger":{},"logic":{},"dialog":{}}}},"NPCs":{"neutral":{"villager-1":{"behaviour":{},"interaction":{},"textures":{},"logic":{},"dialog":{}}},"friendly":{},"enemy":{}},"Maps":{"village":{"test-map":{"tiles":{"textures":[],"modifiers":[],"triggers":[],"NPCs":[]}}}}}
