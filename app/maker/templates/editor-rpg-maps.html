@@ -4,6 +4,57 @@
 
 
 {% block panel %}
+    <div class="panel-section" id="map-settings">
+        <div class="section-heading">Map settings</div>
+        <div class="panel-element">
+            <div class="panel-heading">Select Map</div>
+            <select id="map-folder-select" class="dropdown-select">
+                <option selected="selected" value="new">New Folder</option>
+            </select>
+            <select id="map-select" class="dropdown-select">
+                <option selected="selected" value="new">New Map</option>
+            </select><button id="select-map">Select</button>
+        </div>
+
+        <div class="panel-element">
+            <div class="panel-heading">Selection-size</div>
+            <input id="map-width-select" type="number" placeholder="Width (tiles)">
+            <input id="map-height-select" type="number" placeholder="Height (tiles)">
+        </div>
+        <div class="panel-element">
+            <div class="panel-heading">Save / Export</div>
+            <button id="save-map">Save</button>
+            <button id="download-map">Download</button>
+            <button id="delete-map">DELETE</button>
+        </div>
+    </div>
+    <div class="panel-section" id="tiles">
+        <div class="section-heading">Tiles</div>
+        <div class="panel-element">
+            <div class="panel-heading">Select Folder</div>
+            <select id="tile-folder-select" class="dropdown-select">
+                <option selected="selected" value="folder1">Folder 1</option>
+            </select>
+            <select id="tile-folder-select" class="dropdown-select">
+                <option selected="selected" value="subfodler1">Sub Folder 1</option>
+            </select>
+        </div>
+        <div class="panel-element">
+            <div class="tile-container">
+                <div class="tile-element">
+                    <div class="tile-img"></div>
+                    <div class="tile-header">tile-1</div>
+                </div>
+                <div class="tile-element">
+                    <div class="tile-img"></div>
+                    <div class="tile-header">tile-2</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
 
 {% endblock %}
 
