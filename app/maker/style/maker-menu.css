@@ -1,8 +1,37 @@
 #maker-menu {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    flex-direction: row;
+    justify-content: space-evenly;
     align-items: center;
     height: 100%;
     width: 100%;
+    background: #000;
+}
+
+.maker-submenu{
+
+    width: 30%;
+    height: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+.maker-menu-title{
+    color: white;
+    height: fit-content;
+    margin-bottom: 5%;
+}
+.maker-menu-button{
+    display: flex;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    user-select: none;
+    background: #ffffff;
+}
+.maker-menu-button:hover{
+    background: rgba(255, 255, 255, 0.58);
 }

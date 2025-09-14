@@ -3,17 +3,20 @@
 
 
 {% block imports %}
-<link href='/style/editor-base.css' rel='stylesheet'>
+    <link href='/style/editor-base.css' rel='stylesheet'>
+    <link href='/style/editor-rpg-maps.css' rel='stylesheet'>
 {% endblock %}
 
 
 {% block body %}
 <div id="editor">
     <div class='editor-panel'>
-
+    {% block panel %}
+    {% endblock %}
     </div>
     <div class='editor-canvas'>
-
+    {% block canvas %}
+    {% endblock %}
     </div>
 
 

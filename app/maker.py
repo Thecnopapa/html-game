@@ -26,7 +26,7 @@ def index():
 
 @app.route("/editor/<style>/<asset>")
 def open_editor(style, asset):
-    pass
+    return render_template("editor-{}-{}.html".format(style, asset))
 
 
 
