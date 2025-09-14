@@ -14,14 +14,15 @@
     position: absolute;
     top:5%;
     background-color: darkgreen;
-    width: 100%;
-    height: 50%;
+
 }
 
-.rpg-map{
+.tile-container{
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
+    width: 100%;
+    height: 50%;
 }
 
 .rpg-tile{
@@ -30,4 +31,13 @@
     background-color: black;
     background-position: center;
     background-size: cover;
+}
+
+
+
+#player{
+    position: absolute;
+    height: 32px;
+    width: 32px;
+    z-index: 50;
 }

@@ -5,6 +5,7 @@
 {% block imports %}
 <link href='/style/rpg-base.css' rel='stylesheet'>
 <script defer type="text/javascript" src="/scripts/rpg-base.js"></script>
+<script defer type="text/javascript" src="/scripts/rpg-game.js"></script>
 
 {% endblock %}
 
@@ -12,7 +13,9 @@
 {% block body %}
 <div id="rpg-content">
   <div class="rpg-map">
-    <div class="template-tile template"></div>
+      <div class="tile-container">
+        <div class="template-tile template"></div>
+      </div>
 
   </div>
 

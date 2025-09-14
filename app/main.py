@@ -9,6 +9,8 @@ import io
 app = Flask(__name__, template_folder='game/templates', static_folder='game')
 
 
+SIZE = 32
+
 
 @app.route("/style/<file>")
 def return_style(file):
@@ -45,31 +47,33 @@ def get_rpg_map():
     return json.dumps(map_data)
 
 
-@app.route("/rpg/tile/<path:path>", methods=["GET", "POST"])
-def return_tile(path):
-    print(path)
+@app.route("/rpg/<type>/<path:path>", methods=["GET", "POST"])
+def return_tile(type, path):
+    print(type, path)
 
     modifiers = request.args.get("modifiers")
-    if modifiers != "":
+    if modifiers is not None and modifiers != "":
         if ";" in modifiers:
             modifiers = modifiers.split(";")
         else:
             modifiers = [modifiers]
 
+
     print(request.args.get("modifiers"))
     if path == "no-tile" or path == "error-tile":
-        print("missing-tile")
-    tile_path = os.path.join("app/game/rpg-assets/tiles/", path)
-    print("TILE PATH:", tile_path)
-    img = Image.open(tile_path).convert("RGBA").resize((32, 32))
+        img = Image.new('RGB', (SIZE, SIZE))
+    else:
+        tile_path = os.path.join("app/game/rpg-assets/{}/".format(type), path)
+        print("TILE PATH:", tile_path)
+        img = Image.open(tile_path).convert("RGBA").resize((SIZE, SIZE))
     print("MODIFIERS", modifiers)
-    if len(modifiers) > 0:
+    if modifiers is not None and len(modifiers) > 0:
         for modifier in modifiers:
             modifier_components = modifier.split("-")
             modifier_name = "-".join(modifier_components[2:])
-            modifier_tile = [f for f in os.listdir("app/game/rpg-assets/tiles/{}/{}/".format(modifier_components[0], modifier_components[1])) if modifier_name in f][0]
-            modifier_path = "app/game/rpg-assets/tiles/{}/{}/{}".format(modifier_components[0], modifier_components[1], modifier_tile)
-            modifier_img = Image.open(modifier_path).convert("RGBA").resize((32, 32))
+            modifier_tile = [f for f in os.listdir("app/game/rpg-assets/{}/{}/{}/".format(type, modifier_components[0], modifier_components[1])) if modifier_name in f][0]
+            modifier_path = "app/game/rpg-assets/{}/{}/{}/{}".format(type, modifier_components[0], modifier_components[1], modifier_tile)
+            modifier_img = Image.open(modifier_path).convert("RGBA").resize((SIZE, SIZE))
             img.paste(modifier_img, (0, 0), modifier_img)
     b = io.BytesIO()
     img.save(b, "png")
@@ -85,7 +89,7 @@ def get_tile_url(tile):
             tile = tile.split("$")[0]
         components = tile.split("-")
         tile_name = "-".join(components[2:])
-        available_tiles = os.listdir("app/game/rpg-assets/tiles/{}/{}/".format(components[0], components[1]))
+        available_tiles = os.listdir("app/game/rpg-assets/tile/{}/{}/".format(components[0], components[1]))
         target_tiles = [t for t in available_tiles if tile_name in t]
         if len(target_tiles) == 0:
             return "/rpg/tile/no-tile"
@@ -94,6 +98,25 @@ def get_tile_url(tile):
         return tile_url
     except:
         return "/rpg/tile/error-tile"
+
+
+
+@app.post("/rpg/player")
+def get_rpg_player():
+    return json.dumps(dict(
+        texture="/rpg/player/base/body/character_blue_0.png"
+    ))
+
+
+
+
+
+
+
+
+
+
+
 
 
 
